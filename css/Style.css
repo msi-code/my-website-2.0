@@ -1,0 +1,55 @@
+*{
+    margin : 0;
+    padding: 0;
+
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+boby {
+    font-family:'poppins', sans-serif;
+    background-color: blue;
+    color: rgb(18, 207, 11);
+    line-height: 1.6;
+
+}
+/*2.header/ navigation bar   */
+.site-header{
+    background: linear-gradient(135deg, #111827, #if2937);
+    padding: 20px 8%;
+    display: flex;
+    align-items: center;
+    top: 0;
+    border : #111827;
+    color: : white;
+    z-index:1000;
+}
+
+.site-logo{
+    font-size: 30px;
+    font-weight: bold ;
+    color: #ff6b35;
+    letter-spacing: 1px;
+}
+
+.main-navigation {
+    gap: 10px;
+    display: flex;
+}
+nav.link {
+    color: #fff
+    font-size: 16px:
+    padding: 10px 15px;
+    border-radius: none;
+    text-decoration: none;
+}
+.main-contect {
+    width: 100%;
+    main-higth: 78wh;
+}
+section {
+    padding: 60px 8%;
+    text-align: center
+}
