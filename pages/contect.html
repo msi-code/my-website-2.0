@@ -3,51 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - EcoTech Solutions</title>
   <link rel="stylesheet" href="../css/Style.css">
-  <title>EcoTech Solutions | Contact Us</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 <body>
-  <!-- Header -->
   <header>
-    <!-- Navigation links -->
-    <nav>
-      <a href="../index.html">HOME</a>
-      <a href="./about.html">ABOUT US</a>
-      <a href="./services.html">SERVICES</a>
-      <a href="./enquiry.html">ENQUIRY</a>
-      <a href="./contact.html">CONTACT US</a>
+    <img src="../Assets/eco friendly.jpg" alt="EcoTech Solutions Logo" width="200" height="150">
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="service.html">Services</a>
+      <a href="Enquiry.html">Enquiries</a>
+      <a href="contect.html">Contact Us</a>
     </nav>
+    <div class="hamburger">
+      <span></span><span></span><span></span><span></span>
+    </div>
   </header>
-   <img src="C:\Users\MANXIWA MSIMELELO\OneDrive\Documents\vs project\my-website-2.0\Assets\eco friendly2" alt="EcoTech Solutions Logo" width="300">
-  <!-- Main section -->
+
   <main>
-    <section>
-      <p style="text-align: center;">
-        At EcoTech Solutions, we make it easy to start your next sustainable digital project.  
-        Whether you have a complete plan or just an idea, our team is ready to listen and help you build.  
-        Get in touch today and we’ll respond within 24 business hours.
-      </p>
-      <hr/>
-    </section>
+    <h1>Get In Touch</h1>
+    <p style="text-align:center;">
+      At EcoTech Solutions, we make it easy to start your next sustainable digital project.  
+      Whether you have a complete plan or just an idea, our team is ready to listen and help you build.  
+      Get in touch today and we’ll respond within 24 business hours.
+    </p>
+    <hr/>
 
     <!-- Contact details -->
-    <section>
-      <h1>Get In Touch</h1>
-      <ul>
-        <li>Email: info@ecotechsolutions.org</li>
-        <li>Phone: +27 41 019 2834</li>
-        <li>Office: 123 GreenTech Lane, Port Elizabeth, South Africa</li>
-        <li>Hours: Mon–Fri, 9 AM – 5 PM</li>
-      </ul>
+    <table>
+      <tr>
+        <td width="150">Email:</td>
+        <td width="200"><a href="mailto:info@ecotechsolutions.org">info@ecotechsolutions.org</a></td>
+      </tr>
+      <tr>
+        <td>Phone:</td>
+        <td>+27 41 019 2834</td>
+      </tr>
+      <tr>
+        <td>Office:</td>
+        <td>123 GreenTech Lane,<br/>Port Elizabeth,<br/>South Africa</td>
+      </tr>
+      <tr>
+        <td>Hours:</td>
+        <td>Mon–Fri, 9 AM – 5 PM</td>
+      </tr>
+    </table>
+
+    <!-- Map -->
+    <section class="map">
+      <iframe src="https://www.google.com/maps/embed?...EcoTechAddress..."
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+      </iframe>
     </section>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10971.582334224895!2d25.561951791354794!3d-33.947542733501024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e7ad3d67e57cad7%3A0x3b2eab3565a5e000!2sEco%20Friendly%20Chemicals!5e0!3m2!1sen!2sza!4v1789203495129!5m2!1sen!2sza" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    <!-- Contact form -->
+
+    <!-- Contact Form -->
     <section>
       <h2>Send Us a Message</h2>
-      <form action="#" method="post">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
+      <form action="mailto:info@ecotechsolutions.org" method="post" enctype="text/plain" class="contact-form" onsubmit="return validateForm()">
+        <table>
+          <tr>
+            <td width="150">Name:</td>
+            <td><input type="text" id="name" name="name" placeholder="Enter your name"></td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td><input type="email" id="email" name="email" placeholder="Enter your email"></td>
+          </tr>
+          <tr>
+            <td>Message:</td>
+            <td><textarea id="message" name="message" rows="5"></textarea></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><p class="error" id="errorMessage"></p></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><input type="submit" value="Send Inquiry"></td>
+          </tr>
+        </table>
+      </form>
+    </section>
+  </main>
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+  <footer>
+    <p>&copy; 2026 EcoTech Solutions | Designed with sustainability in mind</p>
+    <div class="socials">
+      <a href="https://facebook.com/ecotech" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/ecotech" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+    <div class="timestamp" id="time"></div>
+  </footer>
 
+  <script>
+    // Hamburger Navigation
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+
+    // Form Validation
+    function validateForm(){
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const errorMessage = document.getElementById('errorMessage');
+
+      errorMessage.textContent = '';
+      if(name === '' || email === '' || message === ''){
+        errorMessage.textContent = 'All fields are required!';
+        return false;
+      }
+
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if(!email.match(emailPattern)){
+        errorMessage.textContent = 'Incorrect email format!';
+        return false;
+      }
+
+      alert("Your message was submitted successfully!");
+      return true;
+    }
+
+    // Timestamp
+    function displayTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+      hours = hours < 10 ? "0" + hours : hours;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      document.getElementById("time").textContent = hours + ":" + minutes + ":" + seconds;
+    }
+    setInterval(displayTime, 1000);
+    displayTime();
+  </script>
+</body>
+</html>

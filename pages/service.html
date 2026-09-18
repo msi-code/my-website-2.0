@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - EcoTech Solutions</title>
   <link rel="stylesheet" href="../css/Style.css">
-  <title>EcoTech Solutions | Services</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 <body>
-  <!-- Header -->
   <header>
-
-    <!-- Navigation links -->
-    <nav>
-      <a href="../index.html">HOME</a>
-      <a href="./about.html">ABOUT US</a>
-      <a href="./service.html">SERVICES</a>
-      <a href="./enquiry.html">CONTACT US</a>
-      <a href="./contect.html">ENQUIRY</a>
+    <img src="../Assets/eco friendly.jpg" alt="EcoTech Solutions Logo" width="200" height="150">
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="service.html">Services</a>
+      <a href="Enquiry.html">Enquiries</a>
+      <a href="contect.html">Contact Us</a>
     </nav>
+    <div class="hamburger">
+      <span></span><span></span><span></span><span></span>
+    </div>
   </header>
 
-  <!-- Main section -->
   <main>
     <section>
       <p style="text-align: center;">
@@ -30,7 +31,6 @@
       <hr/>
     </section>
 
-    <!-- Services list -->
     <section>
       <h1>Our Services</h1>
       <ul>
@@ -43,9 +43,37 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
     <p>&copy; 2026 EcoTech Solutions | Designed with sustainability in mind</p>
+    <div class="socials">
+      <a href="https://facebook.com/ecotech" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/ecotech" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+    <div class="timestamp" id="time"></div>
   </footer>
+
+  <script>
+    // Hamburger Navigation
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+
+    // Timestamp
+    function displayTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+      hours = hours < 10 ? "0" + hours : hours;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      document.getElementById("time").textContent = hours + ":" + minutes + ":" + seconds;
+    }
+    setInterval(displayTime, 1000);
+    displayTime();
+  </script>
 </body>
 </html>
