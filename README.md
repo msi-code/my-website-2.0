@@ -7,7 +7,7 @@ It was built as part of a practical learning project, aligning with the POE chec
 
 ---
 
-## 🖼️ Layout Overvie
+## 🖼️ Layout Overview
 - **Header**  
   - Logo placement on the left.  
   - Navigation bar with links to Home, About Us, Services, Contact, and Enquiry.  
