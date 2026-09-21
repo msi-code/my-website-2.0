@@ -62,7 +62,6 @@ It was built as part of a practical learning project, aligning with the POE chec
 - **Module**: Web Development (Introduction) WEDE5020  
 - **Score**: 57.5 / 100 (57.5%)  
 - **Submission**: `my-website-2.0.zip` (906 KB) + GitHub repo link  
-- **Turnitin Similarity**: 0% (no report)  
 - **Submission Date**: 14 August 2026, 9:57 PM  
 - **Feedback Date**: 06 September 2026, 7:31 PM  
 - **Notes**:  
