@@ -16,45 +16,85 @@
       <a href="service.html">Services</a>
       <a href="Enquiry.html">Enquiry Us</a>
       <a href="contect.html">Contact Us</a>
-    </nav>
+     </nav>
     <div class="hamburger">
       <span></span><span></span><span></span><span></span>
     </div>
   </header>
-
+ 
   <main>
     <h1>Submit Your Enquiry</h1>
     <p style="text-align:center;">
-      Do you have a project idea, partnership proposal, or general question?  
-      Use the enquiry form below to reach out to EcoTech Solutions.  
-      Our team will review your request and respond within 24 business hours.
+      Interested in our web development, cloud hosting or sustainable IT consulting?
+      Fill in the form below and get an instant cost and turnaround estimate for your project.
     </p>
-
+ 
     <!-- Map -->
     <section class="map">
       <iframe src="https://www.google.com/maps/embed?...EcoTechAddress..."
         width="410" height="450" style="border:0;" allowfullscreen="" loading="lazy">
       </iframe>
     </section>
-
+ 
     <!-- Enquiry Form -->
-    <form action="mailto:info@ecotechsolutions.org" method="post" enctype="text/plain" class="contact-form" onsubmit="return validateForm()">
+    <form id="enquiryForm" class="contact-form" novalidate>
       <table>
         <tr>
-          <td width="150">Full Name:</td>
-          <td><input type="text" id="name" name="name" placeholder="Enter your name"></td>
+          <td width="150"><label for="name">Full Name:</label></td>
+          <td>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+            <span class="field-error" id="nameError"></span>
+          </td>
         </tr>
         <tr>
-          <td width="150">Email:</td>
-          <td><input type="email" id="email" name="email" placeholder="Enter your email"></td>
+          <td width="150"><label for="email">Email:</label></td>
+          <td>
+            <input type="email" id="email" name="email" placeholder="Enter your email">
+            <span class="field-error" id="emailError"></span>
+          </td>
         </tr>
         <tr>
-          <td width="150">Subject:</td>
-          <td><input type="text" id="subject" name="subject" placeholder="Enter subject"></td>
+          <td width="150"><label for="business">Business Name:</label></td>
+          <td>
+            <input type="text" id="business" name="business" placeholder="Enter your business name">
+            <span class="field-error" id="businessError"></span>
+          </td>
         </tr>
         <tr>
-          <td width="150">Message:</td>
-          <td><textarea id="message" name="message" rows="5"></textarea></td>
+          <td width="150"><label for="service">Service:</label></td>
+          <td>
+            <select id="service" name="service">
+              <option value="">-- Select a service --</option>
+              <option value="web">Eco-friendly Website Development</option>
+              <option value="cloud">Green Cloud Hosting Setup</option>
+              <option value="consulting">Sustainable IT Consulting</option>
+            </select>
+            <span class="field-error" id="serviceError"></span>
+          </td>
+        </tr>
+        <tr>
+          <td width="150">Package:</td>
+          <td class="package-options">
+            <label><input type="radio" name="package" value="basic"> Basic</label>
+            <label><input type="radio" name="package" value="standard"> Standard</label>
+            <label><input type="radio" name="package" value="premium"> Premium</label>
+            <span class="field-error" id="packageError"></span>
+          </td>
+        </tr>
+        <tr>
+          <td width="150">Extras:</td>
+          <td class="extras">
+            <label><input type="checkbox" name="extras" value="green"> Green hosting upgrade (R600)</label>
+            <label><input type="checkbox" name="extras" value="seo"> SEO optimisation (R1&nbsp;500)</label>
+            <label><input type="checkbox" name="extras" value="maintenance"> Monthly maintenance plan (R900)</label>
+          </td>
+        </tr>
+        <tr>
+          <td width="150"><label for="message">Project Details:</label></td>
+          <td>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us a little about your project"></textarea>
+            <span class="field-error" id="messageError"></span>
+          </td>
         </tr>
         <tr>
           <td></td>
@@ -62,12 +102,15 @@
         </tr>
         <tr>
           <td></td>
-          <td><input type="submit" value="Send Enquiry"></td>
+          <td><input type="submit" value="Get My Estimate"></td>
         </tr>
       </table>
     </form>
+ 
+    <!-- Response shown after the form is validated -->
+    <section id="result" aria-live="polite"></section>
   </main>
-
+ 
   <footer>
     <p>&copy; 2026 EcoTech Solutions | Designed with sustainability in mind</p>
     <div class="socials">
@@ -76,7 +119,7 @@
     </div>
     <div class="timestamp" id="time"></div>
   </footer>
-
+ 
   <script>
     // Hamburger Navigation
     const hamburger = document.querySelector('.hamburger');
@@ -85,31 +128,154 @@
       navLinks.classList.toggle('active');
       hamburger.classList.toggle('active');
     });
-
-    // Form Validation
-    function validateForm(){
+ 
+    // ---------- Pricing data (example rates in South African rand) ----------
+    const SERVICES = {
+      web:        { label: 'Eco-friendly Website Development', price: 8000, days: 14 },
+      cloud:      { label: 'Green Cloud Hosting Setup',        price: 3500, days: 7 },
+      consulting: { label: 'Sustainable IT Consulting',        price: 2500, days: 5 }
+    };
+    const PACKAGES = {
+      basic:    { label: 'Basic',    priceMultiplier: 1,   timeMultiplier: 1 },
+      standard: { label: 'Standard', priceMultiplier: 1.5, timeMultiplier: 1.4 },
+      premium:  { label: 'Premium',  priceMultiplier: 2.2, timeMultiplier: 1.8 }
+    };
+    const EXTRAS = {
+      green:       { label: 'Green hosting upgrade',  price: 600 },
+      seo:         { label: 'SEO optimisation',       price: 1500 },
+      maintenance: { label: 'Monthly maintenance plan', price: 900 }
+    };
+ 
+    function formatRand(amount) {
+      return 'R' + Math.round(amount).toLocaleString('en-ZA');
+    }
+ 
+    // ---------- Validation helpers ----------
+    function setError(id, text) {
+      document.getElementById(id).textContent = text;
+      return text !== '';
+    }
+ 
+    function validateForm() {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
-      const subject = document.getElementById('subject').value.trim();
+      const business = document.getElementById('business').value.trim();
+      const service = document.getElementById('service').value;
+      const pkg = document.querySelector('input[name="package"]:checked');
       const message = document.getElementById('message').value.trim();
       const errorMessage = document.getElementById('errorMessage');
-
-      errorMessage.textContent = '';
-      if(name === '' || email === '' || subject === '' || message === ''){
-        errorMessage.textContent = 'All fields are required!';
-        return false;
-      }
-
       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if(!email.match(emailPattern)){
-        errorMessage.textContent = 'Incorrect email format!';
-        return false;
+ 
+      let hasError = false;
+      errorMessage.textContent = '';
+ 
+      hasError = setError('nameError',
+        name === '' ? 'Please enter your full name.' :
+        name.length < 2 ? 'Name must be at least 2 characters.' : '') || hasError;
+ 
+      hasError = setError('emailError',
+        email === '' ? 'Please enter your email address.' :
+        !emailPattern.test(email) ? 'Enter a valid email, e.g. name@example.com.' : '') || hasError;
+ 
+      hasError = setError('businessError',
+        business === '' ? 'Please enter your business name.' : '') || hasError;
+ 
+      hasError = setError('serviceError',
+        service === '' ? 'Please choose a service.' : '') || hasError;
+ 
+      hasError = setError('packageError',
+        !pkg ? 'Please choose a package.' : '') || hasError;
+ 
+      hasError = setError('messageError',
+        message === '' ? 'Please describe your project.' :
+        message.length < 10 ? 'Please give us at least 10 characters of detail.' : '') || hasError;
+ 
+      if (hasError) {
+        errorMessage.textContent = 'Please fix the highlighted fields and try again.';
+        return null;
       }
-
-      alert("Your enquiry was submitted successfully!");
-      return true;
+ 
+      const extras = Array.from(document.querySelectorAll('input[name="extras"]:checked'))
+                          .map(box => box.value);
+ 
+      return { name, email, business, service, pkg: pkg.value, extras };
     }
-
+ 
+    // ---------- Process the enquiry and show a response ----------
+    function calculateEstimate(data) {
+      const service = SERVICES[data.service];
+      const pkg = PACKAGES[data.pkg];
+ 
+      const basePrice = service.price * pkg.priceMultiplier;
+      const extrasTotal = data.extras.reduce((sum, key) => sum + EXTRAS[key].price, 0);
+      const total = basePrice + extrasTotal;
+ 
+      const days = Math.ceil(service.days * pkg.timeMultiplier);
+      const weeks = Math.ceil(days / 7);
+ 
+      // Earliest start: 3 business days from today
+      const start = new Date();
+      let added = 0;
+      while (added < 3) {
+        start.setDate(start.getDate() + 1);
+        const day = start.getDay();
+        if (day !== 0 && day !== 6) added++;
+      }
+ 
+      return { service, pkg, basePrice, extrasTotal, total, weeks, start };
+    }
+ 
+    function showResult(data, est) {
+      const result = document.getElementById('result');
+      result.innerHTML = '';
+ 
+      const h2 = document.createElement('h2');
+      h2.textContent = 'Thank you, ' + data.name + '!';
+      result.appendChild(h2);
+ 
+      const intro = document.createElement('p');
+      intro.textContent = 'Here is your estimate for ' + data.business + ':';
+      result.appendChild(intro);
+ 
+      const list = document.createElement('ul');
+      const lines = [
+        'Service: ' + est.service.label + ' (' + est.pkg.label + ' package)',
+        'Base price: ' + formatRand(est.basePrice)
+      ];
+      data.extras.forEach(key => {
+        lines.push('Extra: ' + EXTRAS[key].label + ' - ' + formatRand(EXTRAS[key].price));
+      });
+      lines.push('Estimated total: ' + formatRand(est.total));
+      lines.push('Estimated turnaround: about ' + est.weeks + (est.weeks === 1 ? ' week' : ' weeks'));
+      lines.push('Earliest start date: ' + est.start.toLocaleDateString('en-ZA', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+      }));
+      lines.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        list.appendChild(li);
+      });
+      result.appendChild(list);
+ 
+      const note = document.createElement('p');
+      note.textContent = 'This is an estimate only. Our team will email ' + data.email +
+        ' within 24 business hours with a confirmed quote.';
+      result.appendChild(note);
+ 
+      result.style.display = 'block';
+      result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+ 
+    document.getElementById('enquiryForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const data = validateForm();
+      if (!data) {
+        document.getElementById('result').style.display = 'none';
+        return;
+      }
+      showResult(data, calculateEstimate(data));
+    });
+ 
     // Timestamp
     function displayTime() {
       const now = new Date();
