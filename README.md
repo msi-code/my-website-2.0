@@ -67,6 +67,9 @@ HTML (about.html): Added the class gallery-img to both About Us photos so that J
 
 HTML (about.html): Added the class gallery-img to both About Us photos so that JavaScript can identify them. Added a hidden overlay element, <div id="lightbox"><img id="lightboxImage" src="" alt="Enlarged photo"></div>, just before the closing </main> tag.
 
+JavaScript (about.html): Added a script before the closing </body> tag. It selects every .gallery-img element and adds a click listener. When a photo is clicked, its src is copied into the overlay image and the overlay is displayed with display: flex. A second click listener on the overlay hides it again when the user clicks anywhere on it.
+CSS (Style.css): Added a new "Image Lightbox" section. #lightbox is a fixed, full-screen overlay (position: fixed; inset: 0) that is hidden by default, uses a semi-transparent dark green background taken from the site's colour palette, centres the enlarged photo with flexbox, and sits above all other content with z-index: 1000. The enlarged image is limited to 90% of the screen width and height so it never overflows. .gallery-img was given a pointer cursor and a small hover zoom with a shadow, so users can tell the photos are clickable.
+
 ## 📊 Assessment Feedback (Formative 1 Part 1)
 - **Module**: Web Development (Introduction) WEDE5020  
 - **Score**: 57.5 / 100 (57.5%)  
