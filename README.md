@@ -57,6 +57,14 @@ It was built as part of a practical learning project, aligning with the POE chec
 - Applied POE checklist requirements (forms, enquiry page, footer details).
 
 ---
+### Part 3
+
+Functionality: JavaScript enhancements (Interactive Elements)
+
+Image lightbox on the About Us page (about.html, Style.css).
+Added a lightbox so that the photos on the About Us page open in a larger view when clicked. The approach was adapted from the lightbox example provided by the lecturer, and changed to suit this website.
+HTML (about.html): Added the class gallery-img to both About Us photos so that JavaScript can identify them. Added a hidden overlay element, <div id="lightbox"><img id="lightboxImage" src="" alt="Enlarged photo"></div>, just before the closing </main> tag.
+
 
 ## 📊 Assessment Feedback (Formative 1 Part 1)
 - **Module**: Web Development (Introduction) WEDE5020  
